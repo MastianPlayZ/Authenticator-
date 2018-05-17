@@ -7,6 +7,8 @@ namespace Filialauthentifizierung
 {
     public partial class Form1 : Form
     {
+        private Boolean TimerRunning = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -25,15 +27,21 @@ namespace Filialauthentifizierung
         private void Timer1(object sender, EventArgs e)
         {
             Timer timer = new Timer();
-            timer.Interval = (100); // 10 secs
+            timer.Interval = (100); 
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
         }
+
         
         private void btn_Code_Click(object sender, EventArgs e)
         {
             try //anti-Crash-System+Code generieren
             {
+                if (!TimerRunning)
+                {
+                    TimerRunning = true;
+                }
+
                 if (timer == false)
                 {
                     Timer1(sender, e);
@@ -63,6 +71,7 @@ namespace Filialauthentifizierung
                 else {
                     txtb_c1.Visible = false;
                     txtb_c2.Visible = false;
+                    TimerRunning = false;
                     MessageBox.Show("Bitte Filialnummer angeben!" + "\n" +
                         "Bsp.: 0007");
                 } //Keine gültige Filialnummer angegeben
@@ -82,7 +91,10 @@ namespace Filialauthentifizierung
         } //Position
         private void timer_Tick(object sender, EventArgs e)
         {
-            btn_Code_Click(sender, e);
+            if (TimerRunning)
+            {
+                btn_Code_Click(sender, e);
+            }
         }
     }
 } //Programm
