@@ -8,23 +8,21 @@ namespace Filialauthentifizierung
     public partial class Form1 : Form
     {
         private Boolean TimerRunning = false;
+        private Authenticator authenticator = new Authenticator();
 
+        private int Fnummer = 0;
+
+        //Voreinstellungen
         public Form1()
         {
             InitializeComponent();
             txtb_c1.Visible = false;
             txtb_c2.Visible = false;
-        } //Voreinstellungen
 
-        Boolean timer =false;
+            initTimer();
+        }
 
-        public static byte[] GetHash(string inputString)
-        {
-            HashAlgorithm algorithm = SHA256.Create();  
-            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
-        } //Verschlüsselung -> Definition
-        
-        private void Timer1(object sender, EventArgs e)
+        private void initTimer()
         {
             Timer timer = new Timer();
             timer.Interval = (100); 
@@ -32,6 +30,26 @@ namespace Filialauthentifizierung
             timer.Start();
         }
 
+        private bool validate()
+        {
+            int temp;
+            return (txtb_FN.TextLength == 4 && int.TryParse(txtb_FN.Text, out temp));
+        }
+
+        private void updateCode()
+        {
+            txtb_c1.Visible = true;
+            txtb_c2.Visible = true;
+
+            byte[] hash = authenticator.GenerateKey(Fnummer);
+            txtb_c2.Text = authenticator.HashToString(hash);
+        }
+
+        private void displayErrorInvalidFn()
+        {
+            MessageBox.Show("Bitte Filialnummer angeben!" + "\n" +
+                "Bsp.: 0007");
+        }
         
         private void btn_Code_Click(object sender, EventArgs e)
         {
@@ -42,39 +60,20 @@ namespace Filialauthentifizierung
                     TimerRunning = true;
                 }
 
-                if (timer == false)
+
+                if (validate())
                 {
-                    Timer1(sender, e);
-                    timer = true;
+                    Fnummer = (Int32.Parse(txtb_FN.Text));
+
+                    updateCode();
                 }
-                int temp;
-                if (txtb_FN.TextLength == 4 && int.TryParse(txtb_FN.Text, out temp)) 
-                {
-                    txtb_c1.Visible = true;
-                    txtb_c2.Visible = true;
-                    int fn = Convert.ToInt32(txtb_FN.Text);
-                    int clock = Int32.Parse(DateTime.Now.ToString("hmm"));
-                    int day = Int32.Parse(DateTime.Today.Day.ToString());
-                    int month = Int32.Parse(DateTime.Today.Month.ToString());
-                    int year = Int32.Parse(DateTime.Today.Year.ToString());
-                    int cmdCDMYF = clock * day * month * year * fn;
-                    string cmbToString = cmdCDMYF.ToString();
-                    byte[] hash = GetHash(cmbToString);
-                    string mdfHash = "";
-                    for (int i = 0; i <= 7; i++)
-                    {
-                        mdfHash = mdfHash + hash[i].ToString("X");
-                    } //Verschlüsselung
-                    mdfHash = mdfHash.Substring(0, 8);
-                    txtb_c2.Text = mdfHash;
-                } //Code generieren
                 else {
+                    TimerRunning = false;
                     txtb_c1.Visible = false;
                     txtb_c2.Visible = false;
-                    TimerRunning = false;
-                    MessageBox.Show("Bitte Filialnummer angeben!" + "\n" +
-                        "Bsp.: 0007");
-                } //Keine gültige Filialnummer angegeben
+
+                    displayErrorInvalidFn();
+                }
             }
             catch
             {
@@ -82,8 +81,7 @@ namespace Filialauthentifizierung
                 txtb_c2.Visible = false;
                 MessageBox.Show("Fehler! Den Fehler haben nicht mal die Programmierer geschafft!Applaus!");
             }
-
-        } //Code generieren bei Klicken des Knopfes
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -93,8 +91,8 @@ namespace Filialauthentifizierung
         {
             if (TimerRunning)
             {
-                btn_Code_Click(sender, e);
+                updateCode();
             }
         }
     }
-} //Programm
+}
