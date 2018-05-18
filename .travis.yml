@@ -1,0 +1,4 @@
+language: csharp
+solution: "./Filialauthentifizierung.sln"
+script:
+- xbuild ./Filialauthentifizierung.sln
