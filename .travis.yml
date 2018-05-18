@@ -2,3 +2,10 @@ language: csharp
 solution: "./Filialauthentifizierung.sln"
 script:
 - xbuild ./Filialauthentifizierung.sln
+deploy:
+  provider: releases
+  api_key:
+    secure: S3DfALQOQmmVRnfVd6nVOwlAWAn7OZOKevkkpyzO2W71dciLXMUkyOtxdFaAv2Br7vhNPCQQaJQe1SXez3RkJe13e8oheowbTLrRn4lC5jOqNZ6BdbwqS0vFj+9M/fV697dduXwBhpgjqJIGs8Mfb/rGtKtgLqC47cpfZP1PjosWyb+1VAvmvleCxHDpF4Ox3tS5mX7yCyiVFmxFvY2iwKMVUg+izanpLeSom7bmm4YEIMgDw4AYXHNHab3OZ3PFZKoXHWevYKx2RJYB87Xe78AZPnHYofh8j+ctMQe9aO9ZHt8zs467kjcWOYSBBEpYGQwKcA49cd+woChidEECXBpNN30c+R+9aI/J+dpp1q0lDyfP4HXItOcwIWSN2oJJQCt35LMDPTjih1QjGCAr/g2LBVkat+up5w+kLOcVg2hcIdfhMIjcJuhpmR7E+tEVBxy64NVHEOSzJc8AwCQO52DG3Twl67kM5y9D2JTH1jdobRO9hRhw6vuGuxj6aQ+qeKjzmNgjfM+17vT1AMjRcdL1a/qik0GTwEQ2xseTUZC71dCrVjNb7GrCNsjuA6NpIm878igV3YhjrQ6fi5cGbdgaYgIo9nw81X/lqU4nbvmJU3QDBlY9dLc2FAxLw1HrpBTnCoVsVQvilTcyT7ib4pmZm1lOxe40MAzOmyzz8vI=
+  file: bin/Debug/Filialauthentifizierung.exe
+  on:
+    repo: MastianPlayZ/Authenticator-
