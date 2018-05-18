@@ -2,3 +2,4 @@ language: csharp
 solution: "./Filialauthentifizierung.sln"
 script:
 - xbuild ./Filialauthentifizierung.sln
+- mono ./Filialauthentifizierung/packages/xunit.runner.console*/tools/xunit.console.exe ./Filialauthentifizierung.sln.Tests/bin/Debug/Filialauthentifizierung.Tests.dll
