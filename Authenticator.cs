@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Filialauthentifizierung
 {
-    class Authenticator
+    public class Authenticator
     {
         // Verschlüsselung
         public byte[] Hash(string inputString)
@@ -29,13 +29,18 @@ namespace Filialauthentifizierung
             return hash;
         }
 
+        public static string HashToString()
+        {
+            throw new NotImplementedException();
+        }
+
         // Gebe die ersten 4 byte der Eingabe als HEX-string zurück.
         public string HashToString(byte[] hash)
         {
             string mdfHash = "";
             for (int i = 0; i < 4; i++)
             {
-                mdfHash = mdfHash + hash[i].ToString("X");
+                mdfHash = mdfHash + hash[i].ToString("X2");
             }
             return mdfHash;
         }
