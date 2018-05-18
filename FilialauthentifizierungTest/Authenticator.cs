@@ -1,13 +1,15 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/*
+using System;
 using System.Text;
 
 namespace FilialauthentifizierungTest
 {
-    [TestClass]
+    using NUnit.Framework;
+
+    [TestFixture]
     public class Authenticator
     {
-        [TestMethod]
+        [Test]
         public void TestHash()
         {
             Filialauthentifizierung.Authenticator authenticator = new Filialauthentifizierung.Authenticator();
@@ -15,7 +17,7 @@ namespace FilialauthentifizierungTest
             string expected ="37290D74AC4D186E3A8E5785D259D2EC04FAC91AE28092E7620EC8BC99E830AA";
             Assert.AreEqual(expected, BitConverter.ToString(hash).Replace("-",""));
         }
-        [TestMethod]
+        [Test]
         public void TestHashToString()
         {
             Filialauthentifizierung.Authenticator authenticator = new Filialauthentifizierung.Authenticator();
@@ -26,4 +28,4 @@ namespace FilialauthentifizierungTest
         }
     } 
 }
-
+*/
